@@ -33,9 +33,9 @@ namespace FileRenamer
         {
             if (System.IO.Directory.Exists(txtSourcePath.Text))
             {
-            sSourcePath = txtSourcePath.Text;
-            ListDirectory(treeViewSource,sSourcePath);
-            lblSourcePath.Text = txtSourcePath.Text;
+                sSourcePath = txtSourcePath.Text;
+                ListDirectory(treeViewSource, sSourcePath);
+                lblSourcePath.Text = txtSourcePath.Text;
             }
             else
             {
@@ -78,6 +78,16 @@ namespace FileRenamer
             GetCheckedNodes(treeViewSource.Nodes, treeViewPreview.Nodes);
         }
 
+        private string CheckTokens(string input)
+        {
+            string output = input;
+            if (input.Contains(":#"))
+            {
+                output = Regex.Replace(input, @":#", "001");
+            }
+
+            return output;
+        }
 
         public void GetCheckedNodes(TreeNodeCollection nodesSource, TreeNodeCollection nodesPreview)
         {
@@ -93,11 +103,15 @@ namespace FileRenamer
                     bNode.BackColor = Color.PaleGreen;
                     if (rbFindAndReplace.Checked)
                     {
-                        bNode.Text = new RegexMethods().FindAndReplace(bNode.Text, txtReplace.Text, txtReplaceWith.Text);
+                        string newText = new RegexMethods().FindAndReplace(bNode.Text, txtReplace.Text, txtReplaceWith.Text);
+                        bNode.Text = CheckTokens(newText);
                     }
                     else if (rbNewFileName.Checked)
                     {
-                        bNode.Text = new RegexMethods().NewFileName(this, bNode.Text);
+                        string newText = new RegexMethods().NewFileName(this, bNode.Text);
+                        bNode.Text = CheckTokens(newText);
+                        //bNode.Text = new RegexMethods().NewFileName(this, bNode.Text);
+                        //string newText = CheckTokens(txtNewFileName.Text));
                         //if (bNode.PrevNode != null && bNode.Text == bNode.PrevNode.Text)
                         //{
                         //    bNode.Text = bNode.Text + "x";
@@ -165,11 +179,15 @@ namespace FileRenamer
             {
                 cbNewName.Enabled = true;
                 cbNewFileExtension.Enabled = true;
+                txtNewFileName.Enabled = true;
+                txtNewFileExtension.Enabled = true;
             }
             else
             {
                 cbNewName.Enabled = false;
                 cbNewFileExtension.Enabled = false;
+                txtNewFileName.Enabled = false;
+                txtNewFileExtension.Enabled = false;
             }
         }
         private void cbNewFileExtension_CheckedChanged(object sender, EventArgs e)
@@ -216,6 +234,16 @@ namespace FileRenamer
             {
                 txtNewFileName.Enabled = false;
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

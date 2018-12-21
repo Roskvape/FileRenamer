@@ -69,6 +69,9 @@ namespace FileRenamer
             this.txtSourcePath = new System.Windows.Forms.TextBox();
             this.btnBrowseSource = new System.Windows.Forms.Button();
             this.pnlOptions2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.lblOptions = new System.Windows.Forms.Label();
             this.pnlSource = new System.Windows.Forms.Panel();
             this.lblSourcePath = new System.Windows.Forms.Label();
             this.lblSourceTreeView = new System.Windows.Forms.Label();
@@ -81,6 +84,8 @@ namespace FileRenamer
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlOptions1.SuspendLayout();
             this.gBoxTypes.SuspendLayout();
+            this.pnlOptions2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.pnlSource.SuspendLayout();
             this.pnlPreview.SuspendLayout();
             this.SuspendLayout();
@@ -269,11 +274,57 @@ namespace FileRenamer
             // 
             // pnlOptions2
             // 
+            this.pnlOptions2.Controls.Add(this.label1);
+            this.pnlOptions2.Controls.Add(this.numericUpDown1);
+            this.pnlOptions2.Controls.Add(this.lblOptions);
             this.pnlOptions2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlOptions2.Location = new System.Drawing.Point(403, 3);
             this.pnlOptions2.Name = "pnlOptions2";
             this.pnlOptions2.Size = new System.Drawing.Size(394, 161);
             this.pnlOptions2.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(-3, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(62, 19);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(60, 20);
+            this.numericUpDown1.TabIndex = 11;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // lblOptions
+            // 
+            this.lblOptions.AutoSize = true;
+            this.lblOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOptions.Location = new System.Drawing.Point(0, 0);
+            this.lblOptions.Name = "lblOptions";
+            this.lblOptions.Size = new System.Drawing.Size(60, 15);
+            this.lblOptions.TabIndex = 10;
+            this.lblOptions.Text = "Options:";
             // 
             // pnlSource
             // 
@@ -369,6 +420,9 @@ namespace FileRenamer
             this.pnlOptions1.PerformLayout();
             this.gBoxTypes.ResumeLayout(false);
             this.gBoxTypes.PerformLayout();
+            this.pnlOptions2.ResumeLayout(false);
+            this.pnlOptions2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.pnlSource.ResumeLayout(false);
             this.pnlSource.PerformLayout();
             this.pnlPreview.ResumeLayout(false);
@@ -405,6 +459,9 @@ namespace FileRenamer
         private System.Windows.Forms.RadioButton rbNewFileName;
         private System.Windows.Forms.Label lblReplace;
         private System.Windows.Forms.CheckBox cbNewName;
+        private System.Windows.Forms.Label lblOptions;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label1;
     }
 }
 

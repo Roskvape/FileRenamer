@@ -8,3 +8,13 @@ U:\Training\C Sharp\Renamer\FileRenamer\FileRenamer\obj\Debug\FileRenamer.csproj
 U:\Training\C Sharp\Renamer\FileRenamer\FileRenamer\obj\Debug\FileRenamer.exe
 U:\Training\C Sharp\Renamer\FileRenamer\FileRenamer\obj\Debug\FileRenamer.pdb
 U:\Training\C Sharp\Renamer\FileRenamer\FileRenamer\obj\Debug\FileRenamer.Interface.resources
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\bin\Debug\FileRenamer.exe.config
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\bin\Debug\FileRenamer.exe
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\bin\Debug\FileRenamer.pdb
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csprojAssemblyReference.cache
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.Interface.resources
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.Properties.Resources.resources
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csproj.GenerateResource.cache
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csproj.CoreCompileInputs.cache
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.exe
+U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.pdb

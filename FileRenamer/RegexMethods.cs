@@ -36,7 +36,7 @@ namespace FileRenamer
 
             if (sAllPieces.Length > 1)
             {
-            sFileExtOnly = Regex.Split(sSource, @"\.").Last();
+                sFileExtOnly = Regex.Split(sSource, @"\.").Last();
             }
 
             if (sAllPieces.Length > 2)
