@@ -14,6 +14,8 @@ namespace FileRenamer
 {
     public partial class Interface : Form
     {
+        public int CurrentIncrement { get; set; }
+
         public Interface()
         {
             InitializeComponent();
@@ -81,9 +83,22 @@ namespace FileRenamer
         private string CheckTokens(string input)
         {
             string output = input;
-            if (input.Contains(":#"))
+            if (input.Contains(txtCounterToken.Text))
             {
-                output = Regex.Replace(input, @":#", "001");
+                output = Regex.Replace(input, txtCounterToken.Text, Counter());
+            }
+
+            return output;
+        }
+
+        private string Counter()
+        {
+            int iOutput = Int32.Parse(nupCounterStartAt.Text) + (CurrentIncrement * Int32.Parse(nupCounterIncrement.Text));
+            string output = iOutput.ToString();
+
+            while (Int32.Parse(nupCounterDigits.Text) > output.Length)
+            {
+                output = "0" + output;
             }
 
             return output;
@@ -91,6 +106,8 @@ namespace FileRenamer
 
         public void GetCheckedNodes(TreeNodeCollection nodesSource, TreeNodeCollection nodesPreview)
         {
+            HashSet<string> hashNodes = new HashSet<string>();
+            CurrentIncrement = 0;
             foreach (System.Windows.Forms.TreeNode aNode in nodesSource)
             {
                 TreeNode bNode = new TreeNode(aNode.Text);
@@ -110,12 +127,17 @@ namespace FileRenamer
                     {
                         string newText = new RegexMethods().NewFileName(this, bNode.Text);
                         bNode.Text = CheckTokens(newText);
-                        //bNode.Text = new RegexMethods().NewFileName(this, bNode.Text);
-                        //string newText = CheckTokens(txtNewFileName.Text));
-                        //if (bNode.PrevNode != null && bNode.Text == bNode.PrevNode.Text)
-                        //{
-                        //    bNode.Text = bNode.Text + "x";
-                        //}
+                        if (!hashNodes.Add(bNode.Text))
+                        {
+                            bNode.ForeColor = Color.Red;
+                            bNode.BackColor = Color.MistyRose;
+                            if (newText.Contains(txtCounterToken.Text))
+                            {
+                                CurrentIncrement += 1;
+                                bNode.Text = CheckTokens(newText);
+                                hashNodes.Add(bNode.Text);
+                            }
+                        }
                     }
                 }
                 else
@@ -242,11 +264,6 @@ namespace FileRenamer
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
         {
 
         }

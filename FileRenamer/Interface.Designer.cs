@@ -69,8 +69,15 @@ namespace FileRenamer
             this.txtSourcePath = new System.Windows.Forms.TextBox();
             this.btnBrowseSource = new System.Windows.Forms.Button();
             this.pnlOptions2 = new System.Windows.Forms.Panel();
+            this.gBoxCounter = new System.Windows.Forms.GroupBox();
+            this.txtCounterToken = new System.Windows.Forms.TextBox();
+            this.lblCounterToken = new System.Windows.Forms.Label();
             this.lblCounterDigits = new System.Windows.Forms.Label();
             this.nupCounterDigits = new System.Windows.Forms.NumericUpDown();
+            this.lblCounterIncrement = new System.Windows.Forms.Label();
+            this.lblCounterStartAt = new System.Windows.Forms.Label();
+            this.nupCounterIncrement = new System.Windows.Forms.NumericUpDown();
+            this.nupCounterStartAt = new System.Windows.Forms.NumericUpDown();
             this.lblOptions = new System.Windows.Forms.Label();
             this.pnlSource = new System.Windows.Forms.Panel();
             this.lblSourcePath = new System.Windows.Forms.Label();
@@ -81,23 +88,16 @@ namespace FileRenamer
             this.lblPreviewTreeView = new System.Windows.Forms.Label();
             this.treeViewPreview = new System.Windows.Forms.TreeView();
             this.folderBrowseSource = new System.Windows.Forms.FolderBrowserDialog();
-            this.lblCounterIncrement = new System.Windows.Forms.Label();
-            this.nupCountIncrement = new System.Windows.Forms.NumericUpDown();
-            this.lblCounterStartAt = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.gBoxCounter = new System.Windows.Forms.GroupBox();
-            this.lblCounterToken = new System.Windows.Forms.Label();
-            this.txtCounterToken = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlOptions1.SuspendLayout();
             this.gBoxTypes.SuspendLayout();
             this.pnlOptions2.SuspendLayout();
+            this.gBoxCounter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupCounterDigits)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupCounterIncrement)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupCounterStartAt)).BeginInit();
             this.pnlSource.SuspendLayout();
             this.pnlPreview.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupCountIncrement)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.gBoxCounter.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -229,7 +229,7 @@ namespace FileRenamer
             this.txtNewFileName.Name = "txtNewFileName";
             this.txtNewFileName.Size = new System.Drawing.Size(106, 20);
             this.txtNewFileName.TabIndex = 1;
-            this.txtNewFileName.Text = "NewFileName";
+            this.txtNewFileName.Text = "NewFileName_:#";
             this.txtNewFileName.TextChanged += new System.EventHandler(this.txtNewFileName_TextChanged);
             // 
             // cbNewFileExtension
@@ -292,6 +292,41 @@ namespace FileRenamer
             this.pnlOptions2.Size = new System.Drawing.Size(394, 161);
             this.pnlOptions2.TabIndex = 4;
             // 
+            // gBoxCounter
+            // 
+            this.gBoxCounter.Controls.Add(this.txtCounterToken);
+            this.gBoxCounter.Controls.Add(this.lblCounterToken);
+            this.gBoxCounter.Controls.Add(this.lblCounterDigits);
+            this.gBoxCounter.Controls.Add(this.nupCounterDigits);
+            this.gBoxCounter.Controls.Add(this.lblCounterIncrement);
+            this.gBoxCounter.Controls.Add(this.lblCounterStartAt);
+            this.gBoxCounter.Controls.Add(this.nupCounterIncrement);
+            this.gBoxCounter.Controls.Add(this.nupCounterStartAt);
+            this.gBoxCounter.Location = new System.Drawing.Point(0, 23);
+            this.gBoxCounter.Name = "gBoxCounter";
+            this.gBoxCounter.Size = new System.Drawing.Size(124, 135);
+            this.gBoxCounter.TabIndex = 17;
+            this.gBoxCounter.TabStop = false;
+            this.gBoxCounter.Text = "Counter";
+            // 
+            // txtCounterToken
+            // 
+            this.txtCounterToken.Enabled = false;
+            this.txtCounterToken.Location = new System.Drawing.Point(66, 20);
+            this.txtCounterToken.Name = "txtCounterToken";
+            this.txtCounterToken.Size = new System.Drawing.Size(47, 20);
+            this.txtCounterToken.TabIndex = 18;
+            this.txtCounterToken.Text = ":#";
+            // 
+            // lblCounterToken
+            // 
+            this.lblCounterToken.AutoSize = true;
+            this.lblCounterToken.Location = new System.Drawing.Point(6, 23);
+            this.lblCounterToken.Name = "lblCounterToken";
+            this.lblCounterToken.Size = new System.Drawing.Size(41, 13);
+            this.lblCounterToken.TabIndex = 17;
+            this.lblCounterToken.Text = "Token:";
+            // 
             // lblCounterDigits
             // 
             this.lblCounterDigits.AutoSize = true;
@@ -324,6 +359,58 @@ namespace FileRenamer
             0,
             0});
             this.nupCounterDigits.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // lblCounterIncrement
+            // 
+            this.lblCounterIncrement.AutoSize = true;
+            this.lblCounterIncrement.Location = new System.Drawing.Point(6, 72);
+            this.lblCounterIncrement.Name = "lblCounterIncrement";
+            this.lblCounterIncrement.Size = new System.Drawing.Size(57, 13);
+            this.lblCounterIncrement.TabIndex = 14;
+            this.lblCounterIncrement.Text = "Increment:";
+            // 
+            // lblCounterStartAt
+            // 
+            this.lblCounterStartAt.AutoSize = true;
+            this.lblCounterStartAt.Location = new System.Drawing.Point(6, 98);
+            this.lblCounterStartAt.Name = "lblCounterStartAt";
+            this.lblCounterStartAt.Size = new System.Drawing.Size(45, 13);
+            this.lblCounterStartAt.TabIndex = 16;
+            this.lblCounterStartAt.Text = "Start At:";
+            // 
+            // nupCounterIncrement
+            // 
+            this.nupCounterIncrement.Location = new System.Drawing.Point(66, 70);
+            this.nupCounterIncrement.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupCounterIncrement.Name = "nupCounterIncrement";
+            this.nupCounterIncrement.Size = new System.Drawing.Size(47, 20);
+            this.nupCounterIncrement.TabIndex = 13;
+            this.nupCounterIncrement.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // nupCounterStartAt
+            // 
+            this.nupCounterStartAt.Location = new System.Drawing.Point(66, 96);
+            this.nupCounterStartAt.Maximum = new decimal(new int[] {
+            9000,
+            0,
+            0,
+            0});
+            this.nupCounterStartAt.Name = "nupCounterStartAt";
+            this.nupCounterStartAt.Size = new System.Drawing.Size(47, 20);
+            this.nupCounterStartAt.TabIndex = 15;
+            this.nupCounterStartAt.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // lblOptions
             // 
@@ -415,94 +502,6 @@ namespace FileRenamer
             this.treeViewPreview.Size = new System.Drawing.Size(394, 215);
             this.treeViewPreview.TabIndex = 3;
             // 
-            // lblCounterIncrement
-            // 
-            this.lblCounterIncrement.AutoSize = true;
-            this.lblCounterIncrement.Location = new System.Drawing.Point(6, 72);
-            this.lblCounterIncrement.Name = "lblCounterIncrement";
-            this.lblCounterIncrement.Size = new System.Drawing.Size(57, 13);
-            this.lblCounterIncrement.TabIndex = 14;
-            this.lblCounterIncrement.Text = "Increment:";
-            // 
-            // nupCountIncrement
-            // 
-            this.nupCountIncrement.Location = new System.Drawing.Point(66, 70);
-            this.nupCountIncrement.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nupCountIncrement.Name = "nupCountIncrement";
-            this.nupCountIncrement.Size = new System.Drawing.Size(47, 20);
-            this.nupCountIncrement.TabIndex = 13;
-            this.nupCountIncrement.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // lblCounterStartAt
-            // 
-            this.lblCounterStartAt.AutoSize = true;
-            this.lblCounterStartAt.Location = new System.Drawing.Point(6, 98);
-            this.lblCounterStartAt.Name = "lblCounterStartAt";
-            this.lblCounterStartAt.Size = new System.Drawing.Size(45, 13);
-            this.lblCounterStartAt.TabIndex = 16;
-            this.lblCounterStartAt.Text = "Start At:";
-            this.lblCounterStartAt.Click += new System.EventHandler(this.label1_Click_1);
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(66, 96);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            9000,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(47, 20);
-            this.numericUpDown1.TabIndex = 15;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // gBoxCounter
-            // 
-            this.gBoxCounter.Controls.Add(this.txtCounterToken);
-            this.gBoxCounter.Controls.Add(this.lblCounterToken);
-            this.gBoxCounter.Controls.Add(this.lblCounterDigits);
-            this.gBoxCounter.Controls.Add(this.nupCounterDigits);
-            this.gBoxCounter.Controls.Add(this.lblCounterIncrement);
-            this.gBoxCounter.Controls.Add(this.lblCounterStartAt);
-            this.gBoxCounter.Controls.Add(this.nupCountIncrement);
-            this.gBoxCounter.Controls.Add(this.numericUpDown1);
-            this.gBoxCounter.Location = new System.Drawing.Point(0, 23);
-            this.gBoxCounter.Name = "gBoxCounter";
-            this.gBoxCounter.Size = new System.Drawing.Size(124, 135);
-            this.gBoxCounter.TabIndex = 17;
-            this.gBoxCounter.TabStop = false;
-            this.gBoxCounter.Text = "Counter";
-            // 
-            // lblCounterToken
-            // 
-            this.lblCounterToken.AutoSize = true;
-            this.lblCounterToken.Location = new System.Drawing.Point(6, 23);
-            this.lblCounterToken.Name = "lblCounterToken";
-            this.lblCounterToken.Size = new System.Drawing.Size(41, 13);
-            this.lblCounterToken.TabIndex = 17;
-            this.lblCounterToken.Text = "Token:";
-            // 
-            // txtCounterToken
-            // 
-            this.txtCounterToken.Enabled = false;
-            this.txtCounterToken.Location = new System.Drawing.Point(66, 20);
-            this.txtCounterToken.Name = "txtCounterToken";
-            this.txtCounterToken.Size = new System.Drawing.Size(47, 20);
-            this.txtCounterToken.TabIndex = 18;
-            this.txtCounterToken.Text = ":#";
-            // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -519,15 +518,15 @@ namespace FileRenamer
             this.gBoxTypes.PerformLayout();
             this.pnlOptions2.ResumeLayout(false);
             this.pnlOptions2.PerformLayout();
+            this.gBoxCounter.ResumeLayout(false);
+            this.gBoxCounter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupCounterDigits)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupCounterIncrement)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nupCounterStartAt)).EndInit();
             this.pnlSource.ResumeLayout(false);
             this.pnlSource.PerformLayout();
             this.pnlPreview.ResumeLayout(false);
             this.pnlPreview.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nupCountIncrement)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.gBoxCounter.ResumeLayout(false);
-            this.gBoxCounter.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -564,9 +563,9 @@ namespace FileRenamer
         private System.Windows.Forms.NumericUpDown nupCounterDigits;
         private System.Windows.Forms.Label lblCounterDigits;
         private System.Windows.Forms.Label lblCounterStartAt;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nupCounterStartAt;
         private System.Windows.Forms.Label lblCounterIncrement;
-        private System.Windows.Forms.NumericUpDown nupCountIncrement;
+        private System.Windows.Forms.NumericUpDown nupCounterIncrement;
         private System.Windows.Forms.GroupBox gBoxCounter;
         private System.Windows.Forms.TextBox txtCounterToken;
         private System.Windows.Forms.Label lblCounterToken;
