@@ -54,6 +54,10 @@ namespace FileRenamer
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlOptions1 = new System.Windows.Forms.Panel();
+            this.cbTargetIsSame = new System.Windows.Forms.CheckBox();
+            this.lblTargetPathSelection = new System.Windows.Forms.Label();
+            this.txtTargetPath = new System.Windows.Forms.TextBox();
+            this.btnBrowseTarget = new System.Windows.Forms.Button();
             this.gBoxTypes = new System.Windows.Forms.GroupBox();
             this.cbNewName = new System.Windows.Forms.CheckBox();
             this.lblReplace = new System.Windows.Forms.Label();
@@ -80,13 +84,16 @@ namespace FileRenamer
             this.nupCounterStartAt = new System.Windows.Forms.NumericUpDown();
             this.lblOptions = new System.Windows.Forms.Label();
             this.pnlSource = new System.Windows.Forms.Panel();
+            this.btnRefreshSource = new System.Windows.Forms.Button();
             this.lblSourcePath = new System.Windows.Forms.Label();
             this.lblSourceTreeView = new System.Windows.Forms.Label();
             this.treeViewSource = new System.Windows.Forms.TreeView();
             this.pnlPreview = new System.Windows.Forms.Panel();
+            this.btnUpdatePreview = new System.Windows.Forms.Button();
             this.lblPreviewPath = new System.Windows.Forms.Label();
             this.lblPreviewTreeView = new System.Windows.Forms.Label();
             this.treeViewPreview = new System.Windows.Forms.TreeView();
+            this.btnConfirm = new System.Windows.Forms.Button();
             this.folderBrowseSource = new System.Windows.Forms.FolderBrowserDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlOptions1.SuspendLayout();
@@ -109,18 +116,23 @@ namespace FileRenamer
             this.tableLayoutPanel1.Controls.Add(this.pnlOptions2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.pnlSource, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.pnlPreview, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnConfirm, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.8568F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.1432F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.625F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.375F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 511);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // pnlOptions1
             // 
+            this.pnlOptions1.Controls.Add(this.cbTargetIsSame);
+            this.pnlOptions1.Controls.Add(this.lblTargetPathSelection);
+            this.pnlOptions1.Controls.Add(this.txtTargetPath);
+            this.pnlOptions1.Controls.Add(this.btnBrowseTarget);
             this.pnlOptions1.Controls.Add(this.gBoxTypes);
             this.pnlOptions1.Controls.Add(this.lblSourcePathSelection);
             this.pnlOptions1.Controls.Add(this.txtSourcePath);
@@ -128,8 +140,52 @@ namespace FileRenamer
             this.pnlOptions1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlOptions1.Location = new System.Drawing.Point(3, 3);
             this.pnlOptions1.Name = "pnlOptions1";
-            this.pnlOptions1.Size = new System.Drawing.Size(394, 161);
+            this.pnlOptions1.Size = new System.Drawing.Size(394, 213);
             this.pnlOptions1.TabIndex = 3;
+            // 
+            // cbTargetIsSame
+            // 
+            this.cbTargetIsSame.AutoSize = true;
+            this.cbTargetIsSame.Checked = true;
+            this.cbTargetIsSame.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbTargetIsSame.Enabled = false;
+            this.cbTargetIsSame.Location = new System.Drawing.Point(6, 152);
+            this.cbTargetIsSame.Name = "cbTargetIsSame";
+            this.cbTargetIsSame.Size = new System.Drawing.Size(263, 17);
+            this.cbTargetIsSame.TabIndex = 13;
+            this.cbTargetIsSame.Text = "Target is same as source (rename instead of copy)";
+            this.cbTargetIsSame.UseVisualStyleBackColor = true;
+            this.cbTargetIsSame.CheckedChanged += new System.EventHandler(this.cbTargetIsSame_CheckedChanged);
+            // 
+            // lblTargetPathSelection
+            // 
+            this.lblTargetPathSelection.AutoSize = true;
+            this.lblTargetPathSelection.Enabled = false;
+            this.lblTargetPathSelection.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTargetPathSelection.Location = new System.Drawing.Point(0, 172);
+            this.lblTargetPathSelection.Name = "lblTargetPathSelection";
+            this.lblTargetPathSelection.Size = new System.Drawing.Size(157, 15);
+            this.lblTargetPathSelection.TabIndex = 12;
+            this.lblTargetPathSelection.Text = "Select Target Directory:";
+            // 
+            // txtTargetPath
+            // 
+            this.txtTargetPath.Enabled = false;
+            this.txtTargetPath.Location = new System.Drawing.Point(3, 190);
+            this.txtTargetPath.Name = "txtTargetPath";
+            this.txtTargetPath.Size = new System.Drawing.Size(307, 20);
+            this.txtTargetPath.TabIndex = 10;
+            this.txtTargetPath.TextChanged += new System.EventHandler(this.txtTargetPath_TextChanged);
+            // 
+            // btnBrowseTarget
+            // 
+            this.btnBrowseTarget.Enabled = false;
+            this.btnBrowseTarget.Location = new System.Drawing.Point(316, 188);
+            this.btnBrowseTarget.Name = "btnBrowseTarget";
+            this.btnBrowseTarget.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowseTarget.TabIndex = 11;
+            this.btnBrowseTarget.Text = "Browse";
+            this.btnBrowseTarget.UseVisualStyleBackColor = true;
             // 
             // gBoxTypes
             // 
@@ -145,7 +201,7 @@ namespace FileRenamer
             this.gBoxTypes.Controls.Add(this.txtNewFileExtension);
             this.gBoxTypes.Location = new System.Drawing.Point(3, 45);
             this.gBoxTypes.Name = "gBoxTypes";
-            this.gBoxTypes.Size = new System.Drawing.Size(388, 113);
+            this.gBoxTypes.Size = new System.Drawing.Size(388, 94);
             this.gBoxTypes.TabIndex = 9;
             this.gBoxTypes.TabStop = false;
             this.gBoxTypes.Text = "Rename Type";
@@ -174,6 +230,7 @@ namespace FileRenamer
             // rbFindAndReplace
             // 
             this.rbFindAndReplace.AutoSize = true;
+            this.rbFindAndReplace.Enabled = false;
             this.rbFindAndReplace.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbFindAndReplace.Location = new System.Drawing.Point(190, 16);
             this.rbFindAndReplace.Name = "rbFindAndReplace";
@@ -186,6 +243,7 @@ namespace FileRenamer
             // rbNewFileName
             // 
             this.rbNewFileName.AutoSize = true;
+            this.rbNewFileName.Enabled = false;
             this.rbNewFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbNewFileName.Location = new System.Drawing.Point(3, 15);
             this.rbNewFileName.Name = "rbNewFileName";
@@ -229,7 +287,7 @@ namespace FileRenamer
             this.txtNewFileName.Name = "txtNewFileName";
             this.txtNewFileName.Size = new System.Drawing.Size(106, 20);
             this.txtNewFileName.TabIndex = 1;
-            this.txtNewFileName.Text = "NewFileName_:#";
+            this.txtNewFileName.Text = "NewFileName_#";
             this.txtNewFileName.TextChanged += new System.EventHandler(this.txtNewFileName_TextChanged);
             // 
             // cbNewFileExtension
@@ -289,7 +347,7 @@ namespace FileRenamer
             this.pnlOptions2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlOptions2.Location = new System.Drawing.Point(403, 3);
             this.pnlOptions2.Name = "pnlOptions2";
-            this.pnlOptions2.Size = new System.Drawing.Size(394, 161);
+            this.pnlOptions2.Size = new System.Drawing.Size(394, 213);
             this.pnlOptions2.TabIndex = 4;
             // 
             // gBoxCounter
@@ -311,12 +369,11 @@ namespace FileRenamer
             // 
             // txtCounterToken
             // 
-            this.txtCounterToken.Enabled = false;
             this.txtCounterToken.Location = new System.Drawing.Point(66, 20);
             this.txtCounterToken.Name = "txtCounterToken";
             this.txtCounterToken.Size = new System.Drawing.Size(47, 20);
             this.txtCounterToken.TabIndex = 18;
-            this.txtCounterToken.Text = ":#";
+            this.txtCounterToken.Text = "#";
             // 
             // lblCounterToken
             // 
@@ -335,7 +392,6 @@ namespace FileRenamer
             this.lblCounterDigits.Size = new System.Drawing.Size(36, 13);
             this.lblCounterDigits.TabIndex = 12;
             this.lblCounterDigits.Text = "Digits:";
-            this.lblCounterDigits.Click += new System.EventHandler(this.label1_Click);
             // 
             // nupCounterDigits
             // 
@@ -358,7 +414,6 @@ namespace FileRenamer
             0,
             0,
             0});
-            this.nupCounterDigits.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // lblCounterIncrement
             // 
@@ -424,14 +479,25 @@ namespace FileRenamer
             // 
             // pnlSource
             // 
+            this.pnlSource.Controls.Add(this.btnRefreshSource);
             this.pnlSource.Controls.Add(this.lblSourcePath);
             this.pnlSource.Controls.Add(this.lblSourceTreeView);
             this.pnlSource.Controls.Add(this.treeViewSource);
             this.pnlSource.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlSource.Location = new System.Drawing.Point(3, 170);
+            this.pnlSource.Location = new System.Drawing.Point(3, 222);
             this.pnlSource.Name = "pnlSource";
-            this.pnlSource.Size = new System.Drawing.Size(394, 246);
+            this.pnlSource.Size = new System.Drawing.Size(394, 255);
             this.pnlSource.TabIndex = 5;
+            // 
+            // btnRefreshSource
+            // 
+            this.btnRefreshSource.Location = new System.Drawing.Point(339, 0);
+            this.btnRefreshSource.Name = "btnRefreshSource";
+            this.btnRefreshSource.Size = new System.Drawing.Size(55, 28);
+            this.btnRefreshSource.TabIndex = 9;
+            this.btnRefreshSource.Text = "Refresh";
+            this.btnRefreshSource.UseVisualStyleBackColor = true;
+            this.btnRefreshSource.Click += new System.EventHandler(this.btnRefreshSource_Click);
             // 
             // lblSourcePath
             // 
@@ -456,7 +522,7 @@ namespace FileRenamer
             // 
             this.treeViewSource.CheckBoxes = true;
             this.treeViewSource.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewSource.Location = new System.Drawing.Point(0, 31);
+            this.treeViewSource.Location = new System.Drawing.Point(0, 40);
             this.treeViewSource.Name = "treeViewSource";
             this.treeViewSource.Size = new System.Drawing.Size(394, 215);
             this.treeViewSource.TabIndex = 2;
@@ -464,14 +530,25 @@ namespace FileRenamer
             // 
             // pnlPreview
             // 
+            this.pnlPreview.Controls.Add(this.btnUpdatePreview);
             this.pnlPreview.Controls.Add(this.lblPreviewPath);
             this.pnlPreview.Controls.Add(this.lblPreviewTreeView);
             this.pnlPreview.Controls.Add(this.treeViewPreview);
             this.pnlPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPreview.Location = new System.Drawing.Point(403, 170);
+            this.pnlPreview.Location = new System.Drawing.Point(403, 222);
             this.pnlPreview.Name = "pnlPreview";
-            this.pnlPreview.Size = new System.Drawing.Size(394, 246);
+            this.pnlPreview.Size = new System.Drawing.Size(394, 255);
             this.pnlPreview.TabIndex = 6;
+            // 
+            // btnUpdatePreview
+            // 
+            this.btnUpdatePreview.Location = new System.Drawing.Point(338, 0);
+            this.btnUpdatePreview.Name = "btnUpdatePreview";
+            this.btnUpdatePreview.Size = new System.Drawing.Size(55, 28);
+            this.btnUpdatePreview.TabIndex = 8;
+            this.btnUpdatePreview.Text = "Update";
+            this.btnUpdatePreview.UseVisualStyleBackColor = true;
+            this.btnUpdatePreview.Click += new System.EventHandler(this.btnUpdatePreview_Click);
             // 
             // lblPreviewPath
             // 
@@ -497,17 +574,31 @@ namespace FileRenamer
             // 
             this.treeViewPreview.CheckBoxes = true;
             this.treeViewPreview.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewPreview.Location = new System.Drawing.Point(0, 31);
+            this.treeViewPreview.Location = new System.Drawing.Point(0, 40);
             this.treeViewPreview.Name = "treeViewPreview";
             this.treeViewPreview.Size = new System.Drawing.Size(394, 215);
             this.treeViewPreview.TabIndex = 3;
+            // 
+            // btnConfirm
+            // 
+            this.btnConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConfirm.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnConfirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfirm.Location = new System.Drawing.Point(666, 483);
+            this.btnConfirm.Name = "btnConfirm";
+            this.btnConfirm.Size = new System.Drawing.Size(131, 25);
+            this.btnConfirm.TabIndex = 7;
+            this.btnConfirm.Text = "Rename Files!";
+            this.btnConfirm.UseVisualStyleBackColor = false;
+            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
             // Interface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 511);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Interface";
             this.Text = "Form1";
@@ -569,6 +660,13 @@ namespace FileRenamer
         private System.Windows.Forms.GroupBox gBoxCounter;
         private System.Windows.Forms.TextBox txtCounterToken;
         private System.Windows.Forms.Label lblCounterToken;
+        private System.Windows.Forms.Button btnUpdatePreview;
+        private System.Windows.Forms.Button btnRefreshSource;
+        private System.Windows.Forms.CheckBox cbTargetIsSame;
+        private System.Windows.Forms.Label lblTargetPathSelection;
+        private System.Windows.Forms.TextBox txtTargetPath;
+        private System.Windows.Forms.Button btnBrowseTarget;
+        private System.Windows.Forms.Button btnConfirm;
     }
 }
 
