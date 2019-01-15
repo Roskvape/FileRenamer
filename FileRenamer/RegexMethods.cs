@@ -14,7 +14,7 @@ namespace FileRenamer
 
         public string FindAndReplace(string sSource, string sReplace, string sReplaceWith)
         {
-            return Regex.Replace(sSource, sReplace, sReplaceWith, RegexOptions.None);
+            return Regex.Replace(sSource, Regex.Escape(sReplace), sReplaceWith, RegexOptions.None);
         }
 
         public string TestFileName(string sSource)
