@@ -16,9 +16,11 @@ namespace FileRenamer
     {
         #region Properties
         private Dictionary<string, int> dicNodes = new Dictionary<string, int>();
+        private List<string> filesForCopy = new List<string>();
+        private TreeNode foundTreeNode;
 
         #endregion
-        
+
         // Initializer
         public Interface()
         {
@@ -39,6 +41,7 @@ namespace FileRenamer
         private void txtSourcePath_TextChanged(object sender, EventArgs e)
         {
             RefreshSourceView();
+            UpdatePreview();
             if (txtSourcePath.Text != null)
             {
                 rbNewFileName.Enabled = true;
@@ -56,7 +59,20 @@ namespace FileRenamer
             {
                 txtTargetPath.Text = txtSourcePath.Text;
             }
-        } 
+        }
+
+        private void btnBrowseTarget_Click(object sender, EventArgs e)
+        {
+            if (folderBrowseTarget.ShowDialog() == DialogResult.OK)
+            {
+                txtTargetPath.Text = folderBrowseTarget.SelectedPath;
+            }
+        }
+
+        private void txtTargetPath_TextChanged(object sender, EventArgs e)
+        {
+            lblPreviewPath.Text = txtTargetPath.Text;
+        }
         #endregion
 
         #region Find and Replace Controls
@@ -170,13 +186,65 @@ namespace FileRenamer
         }
         private void treeViewSource_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            UpdatePreview();
+            //UpdatePreview();
+            //string aNodeFullPath = e.Node.FullPath;
+
+            if (ContainsNode(e.Node.FullPath, treeViewPreview.Nodes))
+            {
+                GetNode(e.Node.FullPath, treeViewPreview.Nodes);
+                foundTreeNode.Checked = e.Node.Checked;
+
+                if (foundTreeNode.Checked)
+                {
+                    ExpandAllParents(foundTreeNode);
+                }
+                else
+                {
+                    CollapseAllEmptyParents(foundTreeNode);
+                }
+            }
+            else
+            {
+                // TODO add node
+            }
         }
 
-        private void txtTargetPath_TextChanged(object sender, EventArgs e)
+        private bool ContainsNode(string fullPath, TreeNodeCollection collection)
         {
-            lblPreviewPath.Text = txtTargetPath.Text;
+            foreach (TreeNode bNode in collection)
+            {
+                if (bNode.FullPath == fullPath)
+                {
+                    return true;
+                }
+                if (bNode.Nodes.Count != 0)
+                {
+                    if (ContainsNode(fullPath, bNode.Nodes))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
+
+        private void GetNode(string fullPath, TreeNodeCollection collection)
+        {
+            foreach (TreeNode bNode in collection)
+            {
+                if (bNode.FullPath == fullPath)
+                {
+                    foundTreeNode = bNode;
+                    break;
+                }
+
+                if (bNode.Nodes.Count != 0)
+                {
+                    GetNode(fullPath, bNode.Nodes);
+                }
+            }
+        }
+
         #endregion
 
         private void cbTargetIsSame_CheckedChanged(object sender, EventArgs e)
@@ -234,8 +302,8 @@ namespace FileRenamer
             }
             else
             {
-                UpdatePreviewForCopy(treeViewSource.Nodes, treeViewPreview.Nodes);
-                treeViewPreview.ExpandAll();
+                //UpdatePreviewForCopy(treeViewSource.Nodes, treeViewPreview.Nodes);
+                //treeViewPreview.ExpandAll();
             }
         }
 
@@ -251,6 +319,35 @@ namespace FileRenamer
 
             parent.Checked = isChecked;
             SelectAllParents(parent, isChecked);
+        }
+
+        private void ExpandAllParents(TreeNode node)
+        {
+            var parent = node.Parent;
+
+            if (parent == null)
+                return;
+
+            parent.Expand();
+            ExpandAllParents(parent);
+        }
+
+        private void CollapseAllEmptyParents(TreeNode node)
+        {
+            var parent = node.Parent;
+
+            if (parent == null)
+                return;
+
+            if (!HasCheckedNode(parent))
+            {
+                parent.Collapse();
+                CollapseAllEmptyParents(parent);
+            }
+            else
+            {
+                return;
+            }
         }
 
         private bool HasCheckedNode(TreeNode node)
@@ -284,14 +381,20 @@ namespace FileRenamer
         private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
+            
             foreach (var directory in directoryInfo.GetDirectories())
             {
-                directoryNode.Nodes.Add(CreateDirectoryNode((directory)));
+                var newDir = CreateDirectoryNode(directory);
+                //directoryNode.Name = Path.Combine(directoryInfo.FullName, newDir.Text);
+                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+                
             }
 
             foreach (var file in directoryInfo.GetFiles())
             {
-                directoryNode.Nodes.Add(new TreeNode(file.Name));
+                var newNode = new TreeNode(file.Name);
+                //newNode.Name = Path.Combine(directoryInfo.FullName, newNode.Text);
+                directoryNode.Nodes.Add(newNode);
             }
 
             return directoryNode;
@@ -301,19 +404,7 @@ namespace FileRenamer
         {
             foreach (System.Windows.Forms.TreeNode aNode in nodesSource)
             {
-                //TreeNode bNode = new TreeNode(aNode.Text);
                 TreeNode bNode = CreateNodeInPreview(aNode, nodesPreview, aNode.Checked, false);
-                //nodesPreview.Add(bNode);
-
-                //if (aNode.Checked)
-                //{
-                //    FormatNode(bNode);
-                //    RenameNode(bNode);
-                //}
-                //else
-                //{
-                //    bNode.ForeColor = Color.Gray;
-                //}
 
                 if (aNode.Nodes.Count != 0)
                 {
@@ -326,121 +417,160 @@ namespace FileRenamer
             }
         }
 
-        public void UpdatePreviewForCopy(TreeNodeCollection nodesSource, TreeNodeCollection nodesPreview)
-        {
-            foreach (TreeNode aNode in nodesSource)
-            {
-                ProcessNode(aNode, nodesSource, nodesPreview);
-            }
-        }
+        //public void UpdatePreviewForRename(TreeNodeCollection nodesSource, TreeNodeCollection nodesPreview)
+        //{
+        //    foreach (System.Windows.Forms.TreeNode aNode in nodesSource)
+        //    {
+        //        //TreeNode bNode = new TreeNode(aNode.Text);
+        //        TreeNode bNode = CreateNodeInPreview(aNode, nodesPreview, aNode.Checked, false);
+        //        //nodesPreview.Add(bNode);
 
-        public void ProcessNode(TreeNode aNode, TreeNodeCollection nodesSource, TreeNodeCollection nodesPreview)
-        {
-            if (aNode.Checked || HasCheckedNode(aNode))
-            {
-                TreeNode bNode = CreateNodeInPreview(aNode, nodesPreview, aNode.Checked, true);
-                if (aNode.Nodes.Count != 0)
-                {
-                    foreach (TreeNode childNode in aNode.Nodes)
-                    {
-                        ProcessNode(childNode, aNode.Nodes, bNode.Nodes);
-                    }
-                }
-            }
-        }
+        //        //if (aNode.Checked)
+        //        //{
+        //        //    FormatNode(bNode);
+        //        //    RenameNode(bNode);
+        //        //}
+        //        //else
+        //        //{
+        //        //    bNode.ForeColor = Color.Gray;
+        //        //}
+
+        //        if (aNode.Nodes.Count != 0)
+        //        {
+        //            UpdatePreviewForRename(aNode.Nodes, bNode.Nodes);
+        //            if (aNode.IsExpanded)
+        //            {
+        //                bNode.Expand();
+        //            }
+        //        }
+        //    }
+        //}
+
+        //public void UpdatePreviewForCopy(TreeNodeCollection nodesSource, TreeNodeCollection nodesPreview)
+        //{
+        //    foreach (TreeNode aNode in nodesSource)
+        //    {
+        //        ProcessNode(aNode, nodesSource, nodesPreview);
+        //    }
+        //}
+
+        //public void ProcessNode(TreeNode aNode, TreeNodeCollection nodesSource, TreeNodeCollection nodesPreview)
+        //{
+        //    if (aNode.Checked || HasCheckedNode(aNode))
+        //    {
+        //        TreeNode bNode = CreateNodeInPreview(aNode, nodesPreview, aNode.Checked, true);
+        //        if (aNode.Nodes.Count != 0)
+        //        {
+        //            foreach (TreeNode childNode in aNode.Nodes)
+        //            {
+        //                ProcessNode(childNode, aNode.Nodes, bNode.Nodes);
+        //            }
+        //        }
+        //    }
+        //}
 
         public TreeNode CreateNodeInPreview(TreeNode aNode, TreeNodeCollection nodesPreview, bool bNameIsChanged, bool bCopiedToNewLocation)
         {
             TreeNode bNode = new TreeNode(aNode.Text);
+            //bNode.Name = aNode.Name;
             nodesPreview.Add(bNode);
-            bool IsValidPreRename = IsNewFileNameValid(bNode);
-            if (IsValidPreRename)
-            {
-                dicNodes.Add(bNode.Text, 0);
-            }
 
-            if (bNameIsChanged)
-            {
-                RenameNode(bNode);
 
-                if (IsNewFileNameValid(bNode))
-                {
-                    FormatNode(bNode, "validRename");
-                }
-                FormatNode(bNode, "invalidRename");
-            }
-            else
-            {
-                if (bCopiedToNewLocation)
-                {
-                    FormatNode(bNode, "copiedWithoutRename");
-                }
-                else if (IsValidPreRename)
-                {
-                    FormatNode(bNode, "noChange");
-                }
-                else
-                {
-                    FormatNode(bNode, "conflict");
-                }
-            }
             return bNode;
         }
 
-        public void FormatNode(TreeNode node, string status)
-        {
-            switch (status)
-            {
-                case "validRename":
-                    node.Checked = true;
-                    node.ForeColor = Color.Black;
-                    node.BackColor = Color.PaleGreen;
-                    break;
-                case "invalidRename":
-                    node.Checked = true;
-                    node.ForeColor = Color.Red;
-                    node.BackColor = Color.MistyRose;
-                    break;
-                case "conflict":
-                    node.Checked = false;
-                    node.ForeColor = Color.Red;
-                    node.BackColor = Color.MistyRose;
-                    break;
-                case "noChange":
-                    node.Checked = false;
-                    node.ForeColor = Color.Gray;
-                    break;
-                case "copiedWithoutRename":
-                    node.Checked = true;
-                    node.ForeColor = Color.Black;
-                    break;
-                default:
-                    break;
-            }
-        }
+        //public TreeNode CreateNodeInPreview(TreeNode aNode, TreeNodeCollection nodesPreview, bool bNameIsChanged, bool bCopiedToNewLocation)
+        //{
+        //    TreeNode bNode = new TreeNode(aNode.Text);
+        //    nodesPreview.Add(bNode);
+        //    bool IsValidPreRename = IsNewFileNameValid(bNode);
+        //    if (IsValidPreRename)
+        //    {
+        //        dicNodes.Add(bNode.FullPath, 0);
+        //    }
 
-        public void RenameNode(TreeNode node)
-        {
-            if (rbFindAndReplace.Checked)
-            {
-                string newText = new RegexMethods().FindAndReplace(node.Text, txtReplace.Text, txtReplaceWith.Text);
-                node.Text = CheckTokens(newText);
-                if (IsNewFileNameValid(node))
-                {
-                    dicNodes.Add(node.Text, 0);
-                }
-                else
-                {
-                    btnConfirm.Enabled = false;
-                }
-            }
-            else if (rbNewFileName.Checked)
-            {
-                string newText = new RegexMethods().NewFileName(this, node.Text);
-                node.Text = CheckTokens(newText);
-                dicNodes.Add(node.Text, 0);
-            }
-        }
+        //    if (bNameIsChanged)
+        //    {
+        //        RenameNode(bNode);
+
+        //        if (IsNewFileNameValid(bNode))
+        //        {
+        //            FormatNode(bNode, "validRename");
+        //        }
+        //        FormatNode(bNode, "invalidRename");
+        //    }
+        //    else
+        //    {
+        //        if (bCopiedToNewLocation)
+        //        {
+        //            FormatNode(bNode, "copiedWithoutRename");
+        //        }
+        //        else if (IsValidPreRename)
+        //        {
+        //            FormatNode(bNode, "noChange");
+        //        }
+        //        else
+        //        {
+        //            FormatNode(bNode, "conflict");
+        //        }
+        //    }
+        //    return bNode;
+        //}
+
+        //public void FormatNode(TreeNode node, string status)
+        //{
+        //    switch (status)
+        //    {
+        //        case "validRename":
+        //            node.Checked = true;
+        //            node.ForeColor = Color.Black;
+        //            node.BackColor = Color.PaleGreen;
+        //            break;
+        //        case "invalidRename":
+        //            node.Checked = true;
+        //            node.ForeColor = Color.Purple;
+        //            node.BackColor = Color.MistyRose;
+        //            break;
+        //        case "conflict":
+        //            node.Checked = false;
+        //            node.ForeColor = Color.Red;
+        //            node.BackColor = Color.MistyRose;
+        //            break;
+        //        case "noChange":
+        //            node.Checked = false;
+        //            node.ForeColor = Color.Gray;
+        //            break;
+        //        case "copiedWithoutRename":
+        //            node.Checked = true;
+        //            node.ForeColor = Color.Black;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
+
+        //public void RenameNode(TreeNode node)
+        //{
+        //    if (rbFindAndReplace.Checked)
+        //    {
+        //        string newText = new RegexMethods().FindAndReplace(node.Text, txtReplace.Text, txtReplaceWith.Text);
+        //        node.Text = CheckTokens(newText);
+        //        if (IsNewFileNameValid(node))
+        //        {
+        //            dicNodes.Add(node.Text, 0);
+        //        }
+        //        else
+        //        {
+        //            btnConfirm.Enabled = false;
+        //        }
+        //    }
+        //    else if (rbNewFileName.Checked)
+        //    {
+        //        string newText = new RegexMethods().NewFileName(this, node.Text);
+        //        node.Text = CheckTokens(newText);
+        //        dicNodes.Add(node.Text, 0);
+        //    }
+        //}
         #endregion
 
         #region Validation
@@ -524,6 +654,14 @@ namespace FileRenamer
             }
 
             Directory.CreateDirectory(sTempFolderFullPathNew);
+        }
+
+        private void GetFilesForCopy()
+        {
+            foreach (TreeNode x in treeViewSource.Nodes)
+            {
+                filesForCopy.Add(x.Name);
+            }
         }
     }
 }
