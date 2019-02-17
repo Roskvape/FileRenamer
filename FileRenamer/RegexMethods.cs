@@ -27,7 +27,7 @@ namespace FileRenamer
             return Regex.Split(sSource, @"\.", RegexOptions.None).Last();
         }
 
-        public string NewFileName(Interface thisInterface, string sSource)
+        public string NewFileName(string sSource, bool IsNewFileName, bool IsNewFileExt, string NewFileName, string NewFileExt)
         {
             string sFileNameOnly = Regex.Split(sSource, @"\.").First();
             string sFileExtOnly = "";
@@ -47,14 +47,14 @@ namespace FileRenamer
                 }
             }
 
-            if (thisInterface.IsNewFileName)
+            if (IsNewFileName)
             {
-                sFileNameOnly = thisInterface.NewFileName;
+                sFileNameOnly = NewFileName;
             }
 
-            if (thisInterface.IsNewFileExt)
+            if (IsNewFileExt)
             {
-                sFileExtOnly = thisInterface.NewFileExt;
+                sFileExtOnly = NewFileExt;
             }
 
             if (sSource.Contains("."))
