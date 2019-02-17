@@ -18,3 +18,13 @@ U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csproj.
 U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csproj.CoreCompileInputs.cache
 U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.exe
 U:\Training\C Sharp\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.pdb
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\bin\Debug\FileRenamer.exe.config
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\bin\Debug\FileRenamer.exe
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\bin\Debug\FileRenamer.pdb
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csprojAssemblyReference.cache
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.Interface.resources
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.Properties.Resources.resources
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csproj.GenerateResource.cache
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.csproj.CoreCompileInputs.cache
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.exe
+D:\CNM Docs\Programming\C#\Git - File Renamer\FileRenamer\obj\Debug\FileRenamer.pdb
