@@ -4,27 +4,27 @@ namespace FileRenamer
 {
     partial class Interface
     {
-        public bool IsNewFileName
-        {
-            get { return this.cbNewName.Checked; }
-        }
+        //public bool IsNewFileName
+        //{
+        //    get { return this.cbNewName.Checked; }
+        //}
 
-        public string NewFileName
-        {
-            get { return this.txtNewFileName.Text; }
-        }
+        //public string NewFileName
+        //{
+        //    get { return this.txtNewFileName.Text; }
+        //}
 
-        public bool IsNewFileExt
-        {
-            get { return this.cbNewFileExtension.Checked; }
-        }
+        //public bool IsNewFileExt
+        //{
+        //    get { return this.cbNewFileExtension.Checked; }
+        //}
 
-        public string NewFileExt
-        {
-            get { return this.txtNewFileExtension.Text; }
-        }
+        //public string NewFileExt
+        //{
+        //    get { return this.txtNewFileExtension.Text; }
+        //}
 
-        public string sSourcePath = "I'm not yet initialized. :P";
+        //public string sSourcePath = "I'm not yet initialized. :P";
 
         /// <summary>
         /// Required designer variable.
@@ -95,7 +95,6 @@ namespace FileRenamer
             this.treeViewPreview = new System.Windows.Forms.TreeView();
             this.btnConfirm = new System.Windows.Forms.Button();
             this.folderBrowseSource = new System.Windows.Forms.FolderBrowserDialog();
-            this.folderBrowseTarget = new System.Windows.Forms.FolderBrowserDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlOptions1.SuspendLayout();
             this.gBoxTypes.SuspendLayout();
@@ -187,7 +186,6 @@ namespace FileRenamer
             this.btnBrowseTarget.TabIndex = 11;
             this.btnBrowseTarget.Text = "Browse";
             this.btnBrowseTarget.UseVisualStyleBackColor = true;
-            this.btnBrowseTarget.Click += new System.EventHandler(this.btnBrowseTarget_Click);
             // 
             // gBoxTypes
             // 
@@ -372,6 +370,7 @@ namespace FileRenamer
             // txtCounterToken
             // 
             this.txtCounterToken.Location = new System.Drawing.Point(66, 20);
+            this.txtCounterToken.MaxLength = 20;
             this.txtCounterToken.Name = "txtCounterToken";
             this.txtCounterToken.Size = new System.Drawing.Size(47, 20);
             this.txtCounterToken.TabIndex = 18;
@@ -629,12 +628,7 @@ namespace FileRenamer
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button btnBrowseSource;
         private System.Windows.Forms.FolderBrowserDialog folderBrowseSource;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowseTarget;
         private System.Windows.Forms.TextBox txtSourcePath;
-        private System.Windows.Forms.CheckBox cbTargetIsSame;
-        private System.Windows.Forms.Label lblTargetPathSelection;
-        private System.Windows.Forms.TextBox txtTargetPath;
-        private System.Windows.Forms.Button btnBrowseTarget;
         private System.Windows.Forms.TreeView treeViewSource;
         private System.Windows.Forms.Panel pnlOptions1;
         private System.Windows.Forms.Panel pnlOptions2;
@@ -669,6 +663,10 @@ namespace FileRenamer
         private System.Windows.Forms.Label lblCounterToken;
         private System.Windows.Forms.Button btnUpdatePreview;
         private System.Windows.Forms.Button btnRefreshSource;
+        private System.Windows.Forms.CheckBox cbTargetIsSame;
+        private System.Windows.Forms.Label lblTargetPathSelection;
+        private System.Windows.Forms.TextBox txtTargetPath;
+        private System.Windows.Forms.Button btnBrowseTarget;
         private System.Windows.Forms.Button btnConfirm;
     }
 }
